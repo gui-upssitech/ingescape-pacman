@@ -11,6 +11,7 @@ import sys
 import ingescape as igs
 from agent_low_level import LowLevelPacmanPoseGenerator
 import keyboard
+import time
 
 class PacmanPoseGenerator(LowLevelPacmanPoseGenerator):
         
@@ -70,4 +71,5 @@ if __name__ == "__main__":
                 agent.x -= 1
             agent.set_pose(str(agent.x)+":"+str(agent.y))
             print(" pose generated :", agent.x, ":", agent.y)
+        time.sleep(0.2)
     igs.stop()
