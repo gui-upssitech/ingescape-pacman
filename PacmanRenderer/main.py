@@ -9,36 +9,53 @@
 
 import sys
 import ingescape as igs
+from agent_low_level import LowLevelPacmanRenderer
 
-#inputs
-def input_callback(iop_type, name, value_type, value, my_data):
-    pass
-    # add code here if needed
+class PacmanRenderer(LowLevelPacmanRenderer):
+    
+    def __init__(self):
+        super().__init__()
+        self._whiteboard_exists = False
+
+    # Main loop
+    # =========================================================================
+
+    def run_whiteboard(self):
+        self.set_whiteboard_title("Get Pacmaned !")
+
+    # Whiteboard detection
+    # =========================================================================
+
+    def on_agent_entered(self, name):
+        if name == "Whiteboard":
+            self._whiteboard_exists = True
+            self.run_whiteboard()
+
+    def on_agent_left(self, name):
+        if name == "Whiteboard":
+            self._whiteboard_exists = False
+
+
+
+
+
+# main program
 
 if __name__ == "__main__":
-    if len(sys.argv) < 4:
-        print("usage: python3 main.py agent_name network_device port")
+    if len(sys.argv) < 3:
+        print("usage: python3 main.py network_device port")
         devices = igs.net_devices_list()
         print("Please restart with one of these devices as network_device argument:")
         for device in devices:
             print(f" {device}")
         exit(0)
 
-    igs.agent_set_name(sys.argv[1])
-    igs.definition_set_version("1.0")
-    igs.log_set_console(True)
-    igs.log_set_file(True, None)
-    igs.set_command_line(sys.executable + " " + " ".join(sys.argv))
+    _, device, port = sys.argv
+    port = int(port)
 
-    igs.input_create("pose", igs.STRING_T, None)
 
-    igs.output_create("whiteboard_title", igs.STRING_T, None)
-
-    igs.observe_input("pose", input_callback, None)
-
-    igs.start_with_device(sys.argv[2], int(sys.argv[3]))
-
+    agent = PacmanRenderer()
+    igs.start_with_device(device, port)
     input()
-
     igs.stop()
 
