@@ -23,9 +23,9 @@ class LowLevelPacmanPoseGenerator:
     # igs io handlers
     # =========================================================================
 
-    def set_pose(self, value):
-        self.pose = value
-        igs.output_set_string("pose", value)
+    def set_pose(self, x, y):
+        self.pose = str(x)+":"+str(y)
+        igs.output_set_string("pose", self.pose)
 
     # igs agent handlers
     # =========================================================================
