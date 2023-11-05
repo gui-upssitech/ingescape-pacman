@@ -69,4 +69,5 @@ if __name__ == "__main__":
             elif keyboard.is_pressed('LEFT'):
                 agent.x -= 1
             agent.set_pose(str(agent.x)+":"+str(agent.y))
+            print(" pose generated :", agent.x, ":", agent.y)
     igs.stop()
