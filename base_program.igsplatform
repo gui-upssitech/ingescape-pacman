@@ -418,13 +418,18 @@
                     {
                         "commandLine": "C:\\Users\\SRI3APGE\\Documents\\Whiteboard\\Whiteboard.exe",
                         "hostname": "DESKTOP-M2K407K",
-                        "ipAddress": "192.168.1.91",
+                        "ipAddress": "192.168.97.205",
                         "mac": "DC:71:96:BF:58:D3"
                     },
                     {
                         "commandLine": "C:\\Users\\mehdi\\OneDrive\\Documents\\UPS\\SRI\\3A\\Interaction_distribue\\Whiteboard\\Whiteboard.exe",
                         "hostname": "AorusDesktop",
                         "ipAddress": "192.168.1.203"
+                    },
+                    {
+                        "commandLine": "C:\\Users\\User\\OneDrive\\Documents\\UPS\\SRI\\3A\\Interaction_distribue\\Whiteboard\\Whiteboard.exe --port 5670 --device \"WLAN 2\"",
+                        "hostname": "DESKTOP-TVMP782",
+                        "ipAddress": "192.168.97.161"
                     }
                 ],
                 "view": {
@@ -432,7 +437,7 @@
                     "isCollapsed": false,
                     "positionX": 909,
                     "positionY": 234,
-                    "positionZ": 1.1400000000000001,
+                    "positionZ": 1.2300000000000002,
                     "width": 252
                 }
             },
@@ -461,6 +466,15 @@
                     "parameters": [
                     ],
                     "services": [
+                        {
+                            "arguments": [
+                                {
+                                    "name": "elementId",
+                                    "type": "INTEGER"
+                                }
+                            ],
+                            "name": "elementCreated"
+                        }
                     ],
                     "version": "1.0"
                 },
@@ -469,16 +483,22 @@
                     {
                         "commandLine": "\"C:/Program Files/Ingescape/Ingescape Circle/igsTopic.exe\" --port 5670 --device \"WiFi\" --name PacmanRenderer --license \"C:/Users/SRI3APGE/Documents/Ingescape/licenses\"",
                         "hostname": "DESKTOP-M2K407K",
-                        "ipAddress": "192.168.1.91",
+                        "ipAddress": "192.168.97.205",
+                        "mac": "DC:71:96:BF:58:D3"
+                    },
+                    {
+                        "commandLine": "c:\\Users\\SRI3APGE\\Documents\\guill\\ingescape-pacman\\.conda\\python.exe TestAgent\\main.py",
+                        "hostname": "DESKTOP-M2K407K",
+                        "ipAddress": "192.168.97.205",
                         "mac": "DC:71:96:BF:58:D3"
                     }
                 ],
                 "view": {
                     "height": 40,
-                    "isCollapsed": true,
+                    "isCollapsed": false,
                     "positionX": 560,
                     "positionY": 289,
-                    "positionZ": 1.1800000000000002,
+                    "positionZ": 1.2200000000000002,
                     "width": 252
                 }
             },
@@ -507,13 +527,18 @@
                 },
                 "identity": "PacmanPoseGenerator",
                 "instances": [
+                    {
+                        "commandLine": "C:\\Users\\User\\anaconda3\\python.exe C:\\Users\\User\\OneDrive\\Documents\\UPS\\SRI\\3A\\Interaction_distribue\\projet\\ingescape-pacman\\PacmanPoseGenerator\\main.py WLAN 2 5670",
+                        "hostname": "DESKTOP-TVMP782",
+                        "ipAddress": "192.168.97.161"
+                    }
                 ],
                 "view": {
                     "height": 40,
                     "isCollapsed": false,
                     "positionX": 231,
                     "positionY": 237,
-                    "positionZ": 1.1900000000000002,
+                    "positionZ": 1.2500000000000002,
                     "width": 252
                 }
             }
@@ -529,6 +554,12 @@
                 "fromAgent": "PacmanRenderer",
                 "fromInput": "pose",
                 "toAgent": "3593cf42-9404-41e6-aed3-0749ce5f6b92",
+                "toOutput": "value"
+            },
+            {
+                "fromAgent": "Whiteboard",
+                "fromInput": "title",
+                "toAgent": "008b4c46-d4d0-4de1-b3c5-2f3619fd44d5",
                 "toOutput": "value"
             },
             {
@@ -580,7 +611,48 @@
                     "isCollapsed": false,
                     "positionX": 233,
                     "positionY": 381,
-                    "positionZ": 1.2000000000000002,
+                    "positionZ": 1.2600000000000002,
+                    "width": 256
+                }
+            },
+            {
+                "data": {
+                    "entry 0": "Titre"
+                },
+                "definition": {
+                    "description": "",
+                    "family": "fbba66d6-8d60-4694-b5fa-63b6f3f51e63",
+                    "inputs": [
+                        {
+                            "description": "",
+                            "name": "trigger",
+                            "type": "IMPULSION"
+                        }
+                    ],
+                    "isDynamic": false,
+                    "name": "",
+                    "outputs": [
+                        {
+                            "description": "",
+                            "name": "value",
+                            "type": "STRING"
+                        }
+                    ],
+                    "parameters": [
+                    ],
+                    "services": [
+                    ],
+                    "version": ""
+                },
+                "identity": "008b4c46-d4d0-4de1-b3c5-2f3619fd44d5",
+                "instances": [
+                ],
+                "view": {
+                    "height": 52,
+                    "isCollapsed": false,
+                    "positionX": 534,
+                    "positionY": 122,
+                    "positionZ": 1.2700000000000002,
                     "width": 256
                 }
             }
