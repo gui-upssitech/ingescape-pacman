@@ -58,17 +58,19 @@ if __name__ == "__main__":
     agent = PacmanPoseGenerator()
     igs.start_with_device(device, port)
     while running:
+        agent.x = 0
+        agent.y = 0
         if keyboard.is_pressed('q'):
             running = False
         else :
             if keyboard.is_pressed('UP'):
-                agent.y += 1
+                agent.y  = - 1
             elif keyboard.is_pressed('DOWN'):
-                agent.y -= 1
+                agent.y = 1
             if keyboard.is_pressed('RIGHT'):
-                agent.x += 1
+                agent.x = 1
             elif keyboard.is_pressed('LEFT'):
-                agent.x -= 1
+                agent.x = - 1
             agent.set_pose(agent.x, agent.y)
             print(" pose generated :", agent.x, ":", agent.y)
         time.sleep(0.2)
