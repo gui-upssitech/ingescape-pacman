@@ -3,6 +3,9 @@ import sys, uuid, keyboard, time
 
 # variables and state
 WHITEBOARD = "Whiteboard"
+waiting_for_elements = True
+poses = []
+ids = []
 
 agent_state = {
     "pose": (0.0, 0.0),
@@ -36,6 +39,8 @@ igs.observe_agent_events(on_agent_event, agent_state)
 
 # manual control of pacman function
 def manual_control():
+    print("##### Manual control of pacman #####")
+    print("\n Press 'q' to quit, 'a' to activate auto control, arrows to move \n")
     running = True
     while running:
         agent_state["pose"] = (0, 0)
@@ -52,7 +57,8 @@ def manual_control():
                 agent_state["pose"] = (-1, 0)
             elif keyboard.is_pressed('RIGHT'):
                 agent_state["pose"] = (1, 0)
-            time.sleep(0.1)        
+            time.sleep(0.1)  
+        print(agent_state["pose"])      
     igs.output_set_string("pose", str(agent_state["pose"][0])+":"+str(agent_state["pose"][1]))
 
 # gets the id of our pacman
@@ -63,17 +69,27 @@ def get_pacman_id():
 # igs service definition
 def elements(sender_agent_name, sender_agent_uuid, service_name, arguments, token, my_data):
      if sender_agent_name == WHITEBOARD and service_name == "elements":
+        waiting_for_elements = False
         print(arguments)
+        ids = arguments[0]
+        poses = arguments[1]
+        
 
 igs.service_init("elements", elements, None)
 igs.service_arg_add("elements", "jsonArray", igs.STRING_T)
 
 # automatic controle of pacman function
 def auto_control():
-    igs.service_call("elements", WHITEBOARD, [igs.JSON_ARRAY_T, "[]"])
+    print("\n \n ##### Pacman is taking control #####")
+
+    igs.service_call("elements", WHITEBOARD, (), None)
+    while waiting_for_elements:
+        time.sleep(0.1)
+
     pacman_id = get_pacman_id()
-    #ids, poses = elements()
+    
     nearest_pose = None
+
     for i in range(len(ids)):
         if ids[i] == pacman_id:
             pacman_pose = poses[i]
@@ -85,6 +101,7 @@ def auto_control():
                 nearest_pose = pose
     
     agent_state["pose"] = nearest_pose
+    print(agent_state["pose"])
     igs.output_set_string("pose", str(agent_state["pose"][0])+":"+str(agent_state["pose"][1]))
 
 
@@ -94,7 +111,7 @@ def run_whiteboard():
 
 
 # program launch
-igs.start_with_device("WiFi", 5670)
+igs.start_with_device("WLAN 2", 5670)
 
 input()
 igs.stop()
