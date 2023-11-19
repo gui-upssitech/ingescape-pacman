@@ -99,9 +99,9 @@ def auto_control():
     
     nearest_pose = None
 
-    for i in range(len(ids)):
-        if ids[i] == pacman_id:
-            pacman_pose = poses[i]
+    for id in range(len(ids)):
+        if ids[id] == pacman_id:
+            pacman_pose = poses[id]
             break
     
     for pose in range(len(poses)):
