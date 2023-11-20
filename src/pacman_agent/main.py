@@ -2,18 +2,22 @@ import ingescape as igs
 import sys, uuid
 import base64 as b64
 from os import path
-from gif_frames import load_frames, to_b64
+
+from .gif_frames import load_frames, to_b64
+from src.ingescape_utils import wait_for_agent
 
 # variables and state
 WHITEBOARD = "Whiteboard"
 
 agent_state = {
-    "pose": (0.0, 0.0),
+    "cmd_vel": (0.0, 0.0),
     "pacman_id": None,
 
     "agent_list": [],
     "whiteboard_exists": False,
 }
+
+
 
 # igs agent definition
 igs.agent_set_name("PacmanRenderer")
@@ -21,17 +25,18 @@ igs.definition_set_version("1.0")
 igs.set_command_line(sys.executable + " " + " ".join(sys.argv))
 
 
-# igs io pose
+
+# igs io cmd_vel
 def on_new_dir(iop_type, input_name, value_type, value, data):
     speed = 10
     dx, dy = tuple(map(float, value.split(":")))
-    x, y = agent_state["pose"]
-    agent_state["pose"] = (x + dx * speed, y + dy * speed)
-    print(f"new pose : {agent_state['pose']}")
-    draw_pacman(*agent_state["pose"])
+    x, y = agent_state["cmd_vel"]
+    agent_state["cmd_vel"] = (x + dx * speed, y + dy * speed)
+    print(f"new cmd_vel : {agent_state['cmd_vel']}")
+    draw_pacman(*agent_state["cmd_vel"])
 
-igs.input_create("pose", igs.STRING_T, None)
-igs.observe_input("pose", on_new_dir, None)
+igs.input_create("cmd_vel", igs.STRING_T, None)
+igs.observe_input("cmd_vel", on_new_dir, None)
 
 
 
@@ -40,22 +45,6 @@ def set_title(title):
     igs.output_set_string("whiteboard_title", title)
 
 igs.output_create("whiteboard_title", igs.STRING_T, None)
-
-
-
-#igs check if whiteboard exists
-def on_agent_event(type, uuid, name, event_data, my_data):
-    if type == igs.AGENT_ENTERED:
-        my_data["agent_list"].append(name)
-        if name == WHITEBOARD:
-            my_data["whiteboard_exists"] = True
-            run_whiteboard()
-    elif type == igs.AGENT_EXITED:
-        my_data["agent_list"].remove(name)
-        if name == WHITEBOARD:
-            my_data["whiteboard_exists"] = False
-
-igs.observe_agent_events(on_agent_event, agent_state)
 
 
 
@@ -90,10 +79,16 @@ def draw_pacman(x: float, y: float):
 
 
 # program main_loop
-def run_whiteboard():
-    set_title("Get Pacmaned !")
-    draw_pacman(*agent_state["pose"])
+def on_start():
+    agent_state["whiteboard_exists"] = True
 
+    set_title("Get Pacmaned !")
+    draw_pacman(*agent_state["cmd_vel"])
+
+def on_pause():
+    agent_state["whiteboard_exists"] = False
+
+wait_for_agent(WHITEBOARD, on_start, on_pause)
 
 
 # program launch
