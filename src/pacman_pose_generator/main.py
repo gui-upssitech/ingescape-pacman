@@ -1,5 +1,6 @@
 import ingescape as igs
 import sys, uuid, keyboard, time
+from src.ingescape_utils import wait_for_agent
 
 # variables and state
 WHITEBOARD = "Whiteboard"
@@ -24,18 +25,15 @@ igs.set_command_line(sys.executable + " " + " ".join(sys.argv))
 igs.output_create("pose", igs.STRING_T, None)
 
 #igs check if whiteboard exists
-def on_agent_event(type, uuid, name, event_data, my_data):
-    if type == igs.AGENT_ENTERED:
-        my_data["agent_list"].append(name)
-        if name == WHITEBOARD:
-            my_data["whiteboard_exists"] = True
-            manual_control()
-    elif type == igs.AGENT_EXITED:
-        my_data["agent_list"].remove(name)
-        if name == WHITEBOARD:
-            my_data["whiteboard_exists"] = False
+def on_whiteboard_available():
+    agent_state["whiteboard_exists"] = True
+    manual_control()
 
-igs.observe_agent_events(on_agent_event, agent_state)
+def on_whiteboard_unavailable():
+    agent_state["whiteboard_exists"] = False
+
+wait_for_agent(WHITEBOARD, on_whiteboard_available, on_whiteboard_unavailable)
+
 
 # manual control of pacman function
 def manual_control():
