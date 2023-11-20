@@ -29,7 +29,7 @@ def on_agent_event(type, uuid, name, event_data, my_data):
         my_data["agent_list"].append(name)
         if name == WHITEBOARD:
             my_data["whiteboard_exists"] = True
-            run_whiteboard()
+            manual_control()
     elif type == igs.AGENT_EXITED:
         my_data["agent_list"].remove(name)
         if name == WHITEBOARD:
@@ -63,7 +63,7 @@ def manual_control():
                 agent_state["pose"] = (1, 0)
             time.sleep(0.1)  
         print(agent_state["pose"])      
-    igs.output_set_string("pose", str(agent_state["pose"][0])+":"+str(agent_state["pose"][1]))
+        igs.output_set_string("pose", str(agent_state["pose"][0])+":"+str(agent_state["pose"][1]))
 
 # gets the id of our pacman
 def get_pacman_id():
@@ -88,7 +88,7 @@ igs.service_arg_add("elements", "jsonArray", igs.STRING_T)
 def auto_control():
     print("\n \n ##### Pacman is taking control #####")
 
-    igs.service_call(WHITEBOARD, "getElements",(), None)
+    igs.service_call(WHITEBOARD, "getElements", (), None)
     print("calling_service")
 
     while waiting_for_elements:
@@ -112,11 +112,6 @@ def auto_control():
     agent_state["pose"] = nearest_pose
     print(agent_state["pose"])
     igs.output_set_string("pose", str(agent_state["pose"][0])+":"+str(agent_state["pose"][1]))
-
-
-# program main_loop
-def run_whiteboard():
-    manual_control()
 
 
 # program launch
