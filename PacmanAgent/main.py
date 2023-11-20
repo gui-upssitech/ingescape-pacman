@@ -1,5 +1,8 @@
 import ingescape as igs
 import sys, uuid
+import base64 as b64
+from os import path
+from gif_frames import load_frames, to_b64
 
 # variables and state
 WHITEBOARD = "Whiteboard"
@@ -24,6 +27,7 @@ def on_new_dir(iop_type, input_name, value_type, value, data):
     dx, dy = tuple(map(float, value.split(":")))
     x, y = agent_state["pose"]
     agent_state["pose"] = (x + dx * speed, y + dy * speed)
+    print(f"new pose : {agent_state['pose']}")
     draw_pacman(*agent_state["pose"])
 
 igs.input_create("pose", igs.STRING_T, None)
@@ -63,6 +67,8 @@ def on_element_created(sender_agent_name, sender_agent_uuid, service_name, argum
 igs.service_init("elementCreated", on_element_created, None)
 igs.service_arg_add("elementCreated", "elementId", igs.INTEGER_T)
 
+
+
 # draw_functions
 def draw_pacman(x: float, y: float):
     if not agent_state["whiteboard_exists"]:
@@ -70,19 +76,35 @@ def draw_pacman(x: float, y: float):
     
     print(agent_state["pacman_id"])
     if agent_state["pacman_id"] is None:
-        params = ("Ellipse", x, y, 50.0, 50.0, "Yellow", "Black", 2.0)
-        igs.service_call(WHITEBOARD, "addShape", params, None)
+        gif_url = "https://media.discordapp.net/attachments/1164841141502480424/1164863287847034900/PacMan.gif"
+
+        params = (gif_url, x, y)
+        igs.service_call(WHITEBOARD, "addImageFromUrl", params, None)
+
+        # params = ("Ellipse", x, y, 50.0, 50.0, "Yellow", "Black", 2.0)
+        # igs.service_call(WHITEBOARD, "addShape", params, None)
     else:
         params = (agent_state["pacman_id"], x, y)
         igs.service_call(WHITEBOARD, "moveTo", params, None)
+
+
 
 # program main_loop
 def run_whiteboard():
     set_title("Get Pacmaned !")
     draw_pacman(*agent_state["pose"])
 
-# program launch
-igs.start_with_device("WiFi", 5670)
 
-input()
-igs.stop()
+
+# program launch
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print(f"Usage: {sys.argv[0]} <device> <port=5670>")
+        exit(1)
+
+    device = sys.argv[1]
+    port = int(sys.argv[2]) if len(sys.argv) >= 3 else 5670
+    igs.start_with_device(device, port)
+
+    input()
+    igs.stop()
