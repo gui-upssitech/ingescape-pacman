@@ -4,8 +4,8 @@ from src.ingescape_utils import wait_for_agent
 # variables and state
 WHITEBOARD = "Whiteboard"
 
-shapes = ["ellipse", "triangle", "rectangle"]
-colors = ["red", "blue", "green", "yellow", "orange", "purple", "pink", "black", "white"]
+shapes = ["Rectangle", "Ellipse"]
+colors = ["Yellow", "Black", "Red", "Blue", "Green", "Purple", "Orange", "Pink", "Brown", "White"]
 
 agent_state = {
     "whiteboard_exists": False
@@ -27,22 +27,23 @@ wait_for_agent(WHITEBOARD, on_whiteboard_available, on_whiteboard_unavailable)
 
 # main function
 def generate():
-    while (True):
+    while (agent_state["whiteboard_exists"]):
         form = random.choice(shapes)
-        x = random.randint(0, 100)
-        y = random.randint(0, 100)
+        x = random.randint(0, 1000)
+        y = random.randint(0, 1000)
         width = random.randint(10, 50)
         height = random.randint(10, 50)
         fill = random.choice(colors)
         stroke = random.choice(colors)
-        strokeWidth = random.randint(1, 5)
-        igs.service_call(WHITEBOARD, "addShape", [form, x, y, width, height, fill, stroke, strokeWidth])
+        strokeWidth = random.randint(1, 10)
+        params = (form, x, y, width, height, fill, stroke, strokeWidth)
+        print(f"generating : {params}")
+        igs.service_call(WHITEBOARD, "addShape", params, None)
+        print("generated")
         time.sleep(5)
 
-# igs main loop
-igs.run()
 
 # program launch
-igs.start_with_device("WLAN 2", 5670)
+igs.start_with_device("Ethernet", 5670)
 input()
 igs.stop()
