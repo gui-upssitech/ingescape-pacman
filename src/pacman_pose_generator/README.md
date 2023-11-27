@@ -8,9 +8,6 @@ python3 -m pip install ingescape
 
 ## Run
 ```bash
-python -m src.pacman_pose_generator.main
+python -m src.pacman_pose_generator.main <device> <port>
 ```
-* On peut modifier le module et le port dans la partie #program_launch
-
-
-
+* Remplacer ici <device> par votre device et <port> par votre port
