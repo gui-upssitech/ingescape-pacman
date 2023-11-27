@@ -8,6 +8,7 @@ waiting_for_elements = True
 poses = []
 ids = []
 
+
 agent_state = {
     "pose": (0.0, 0.0),
     "pacman_id": None,
@@ -16,13 +17,15 @@ agent_state = {
     "whiteboard_exists": False,
 }
 
-# igs agent definition
-igs.agent_set_name("PacmanPoseGenerator")
-igs.definition_set_version("1.0")
-igs.set_command_line(sys.executable + " " + " ".join(sys.argv))
 
-# igs io
-igs.output_create("pose", igs.STRING_T, None)
+
+def output_pose(pose):
+    pose_str = f"{pose[0]}:{pose[1]}"
+    igs.output_set_string("pose", pose_str)
+    print(pose_str)
+
+
+
 
 #igs check if whiteboard exists
 def on_whiteboard_available():
@@ -32,7 +35,6 @@ def on_whiteboard_available():
 def on_whiteboard_unavailable():
     agent_state["whiteboard_exists"] = False
 
-wait_for_agent(WHITEBOARD, on_whiteboard_available, on_whiteboard_unavailable)
 
 
 # manual control of pacman function
@@ -48,8 +50,8 @@ def manual_control():
         agent_state["pose"] = (0, 0)
         if keyboard.is_pressed('q'):
             running = False
-        if keyboard.is_pressed('a'):
-            auto_control()
+        # if keyboard.is_pressed('a'):
+        #     auto_control()
         else :
             if keyboard.is_pressed('UP'):
                 agent_state["pose"] = (0, -1)
@@ -59,14 +61,18 @@ def manual_control():
                 agent_state["pose"] = (-1, 0)
             elif keyboard.is_pressed('RIGHT'):
                 agent_state["pose"] = (1, 0)
-            time.sleep(0.1)  
-        print(agent_state["pose"])      
-        igs.output_set_string("pose", str(agent_state["pose"][0])+":"+str(agent_state["pose"][1]))
+            time.sleep(0.1)   
+
+        output_pose(agent_state["pose"])
+
+
 
 # gets the id of our pacman
 def get_pacman_id():
     # Replace this with your actual implementation
     return "dummy_pacman_id"
+
+
 
 # igs service definition
 def elements(sender_agent_name, sender_agent_uuid, service_name, arguments, token, my_data):
@@ -78,9 +84,8 @@ def elements(sender_agent_name, sender_agent_uuid, service_name, arguments, toke
         print(arguments)
         ids = arguments[0]
         poses = arguments[1]
-        
-igs.service_init("elements", elements, None)
-igs.service_arg_add("elements", "jsonArray", igs.STRING_T)
+
+
 
 # automatic controle of pacman function
 def auto_control():
@@ -109,12 +114,33 @@ def auto_control():
     
     agent_state["pose"] = nearest_pose
     print(agent_state["pose"])
-    igs.output_set_string("pose", str(agent_state["pose"][0])+":"+str(agent_state["pose"][1]))
+    output_pose(agent_state["pose"])
 
 
 # program launch
-device, port = parse_network_args()
-igs.start_with_device(device, port)
+def create_agent():
+    # igs agent definition
+    igs.agent_set_name("PacmanPoseGenerator")
+    igs.definition_set_version("1.0")
+    igs.set_command_line(sys.executable + " " + " ".join(sys.argv))
 
-input()
-igs.stop()
+    # igs io
+    igs.output_create("pose", igs.STRING_T, None)
+
+    # whiteboard check
+    wait_for_agent(WHITEBOARD, on_whiteboard_available, on_whiteboard_unavailable)
+
+    # igs service definition
+    igs.service_init("elements", elements, None)
+    igs.service_arg_add("elements", "jsonArray", igs.STRING_T)
+
+
+
+if __name__ == "__main__":
+    create_agent()
+
+    device, port = parse_network_args()
+    igs.start_with_device(device, port)
+
+    input()
+    igs.stop()

@@ -24,55 +24,6 @@
                     "description": "",
                     "family": "",
                     "inputs": [
-                    ],
-                    "isDynamic": false,
-                    "name": "PacmanPoseGenerator",
-                    "outputs": [
-                        {
-                            "description": "",
-                            "name": "pose",
-                            "type": "STRING"
-                        }
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                        {
-                            "arguments": [
-                                {
-                                    "name": "jsonArray",
-                                    "type": "STRING"
-                                }
-                            ],
-                            "name": "elements"
-                        }
-                    ],
-                    "version": "1.0"
-                },
-                "identity": "PacmanPoseGenerator",
-                "instances": [
-                    {
-                        "commandLine": "C:\\Users\\User\\anaconda3\\python.exe c:/Users/User/OneDrive/Documents/UPS/SRI/3A/Interaction_distribue/projet/ingescape-pacman/PacmanPoseGenerator/main.py",
-                        "hostname": "DESKTOP-TVMP782",
-                        "ipAddress": "192.168.0.111"
-                    }
-                ],
-                "view": {
-                    "height": 40,
-                    "isCollapsed": false,
-                    "positionX": 239,
-                    "positionY": 268,
-                    "positionZ": 1.05,
-                    "width": 252
-                }
-            },
-            {
-                "data": {
-                },
-                "definition": {
-                    "description": "",
-                    "family": "",
-                    "inputs": [
                         {
                             "description": "",
                             "name": "title",
@@ -465,23 +416,54 @@
                 "identity": "Whiteboard",
                 "instances": [
                     {
-                        "commandLine": "C:\\Users\\User\\OneDrive\\Documents\\UPS\\SRI\\3A\\Interaction_distribue\\Whiteboard\\Whiteboard.exe --port 5670 --device \"WLAN 2\"",
-                        "hostname": "DESKTOP-TVMP782",
-                        "ipAddress": "192.168.0.111"
-                    },
-                    {
                         "commandLine": "/opt/Whiteboard/bin/Whiteboard",
                         "hostname": "the-entity",
-                        "ipAddress": "192.168.0.109",
+                        "ipAddress": "10.245.61.69",
                         "mac": "20:4E:F6:F4:6F:91"
                     }
                 ],
                 "view": {
                     "height": 40,
                     "isCollapsed": false,
-                    "positionX": 1040,
-                    "positionY": 337,
-                    "positionZ": 1.03,
+                    "positionX": 831,
+                    "positionY": 599,
+                    "positionZ": 1.4500000000000004,
+                    "width": 252
+                }
+            },
+            {
+                "data": {
+                },
+                "definition": {
+                    "description": "",
+                    "family": "",
+                    "inputs": [
+                    ],
+                    "isDynamic": false,
+                    "name": "ItemGenerator",
+                    "outputs": [
+                    ],
+                    "parameters": [
+                    ],
+                    "services": [
+                    ],
+                    "version": "1.0"
+                },
+                "identity": "ItemGenerator",
+                "instances": [
+                    {
+                        "commandLine": "/home/guillaume/.conda/ingescape/bin/python /home/guillaume/code/ingescape-pacman/src/item_generator/main.py",
+                        "hostname": "the-entity",
+                        "ipAddress": "10.245.61.69",
+                        "mac": "20:4E:F6:F4:6F:91"
+                    }
+                ],
+                "view": {
+                    "height": 40,
+                    "isCollapsed": false,
+                    "positionX": 15,
+                    "positionY": 354,
+                    "positionZ": 1.4600000000000004,
                     "width": 252
                 }
             },
@@ -494,7 +476,7 @@
                     "inputs": [
                         {
                             "description": "",
-                            "name": "pose",
+                            "name": "cmdVel",
                             "type": "STRING"
                         }
                     ],
@@ -525,18 +507,68 @@
                 "identity": "PacmanRenderer",
                 "instances": [
                     {
-                        "commandLine": "/home/guillaume/.conda/ingescape/bin/python PacmanAgent/main.py wlo1",
+                        "commandLine": "/home/guillaume/.conda/ingescape/bin/python /home/guillaume/code/ingescape-pacman/src/pacman_agent/main.py wlo1",
                         "hostname": "the-entity",
-                        "ipAddress": "192.168.0.109",
+                        "ipAddress": "10.245.61.69",
                         "mac": "20:4E:F6:F4:6F:91"
                     }
                 ],
                 "view": {
                     "height": 40,
                     "isCollapsed": false,
-                    "positionX": 624,
-                    "positionY": 267,
-                    "positionZ": 1.06,
+                    "positionX": 438,
+                    "positionY": 466,
+                    "positionZ": 1.4400000000000004,
+                    "width": 252
+                }
+            },
+            {
+                "data": {
+                },
+                "definition": {
+                    "description": "",
+                    "family": "",
+                    "inputs": [
+                    ],
+                    "isDynamic": false,
+                    "name": "PacmanPoseGenerator",
+                    "outputs": [
+                        {
+                            "description": "",
+                            "name": "pose",
+                            "type": "STRING"
+                        }
+                    ],
+                    "parameters": [
+                    ],
+                    "services": [
+                        {
+                            "arguments": [
+                                {
+                                    "name": "jsonArray",
+                                    "type": "STRING"
+                                }
+                            ],
+                            "name": "elements"
+                        }
+                    ],
+                    "version": "1.0"
+                },
+                "identity": "PacmanPoseGenerator",
+                "instances": [
+                    {
+                        "commandLine": "/home/guillaume/.conda/ingescape/bin/python /home/guillaume/code/ingescape-pacman/src/pacman_pose_generator/main.py wlo1",
+                        "hostname": "the-entity",
+                        "ipAddress": "10.245.61.69",
+                        "mac": "20:4E:F6:F4:6F:91"
+                    }
+                ],
+                "view": {
+                    "height": 40,
+                    "isCollapsed": false,
+                    "positionX": 98,
+                    "positionY": 632,
+                    "positionZ": 1.4200000000000004,
                     "width": 252
                 }
             }
@@ -550,9 +582,21 @@
             },
             {
                 "fromAgent": "PacmanRenderer",
-                "fromInput": "pose",
+                "fromInput": "cmdVel",
                 "toAgent": "PacmanPoseGenerator",
                 "toOutput": "pose"
+            },
+            {
+                "fromAgent": "c6c9070b-0d9e-4724-9bf0-122c96c82c7d",
+                "fromInput": "wildcard",
+                "toAgent": "PacmanPoseGenerator",
+                "toOutput": "pose"
+            },
+            {
+                "fromAgent": "PacmanRenderer",
+                "fromInput": "cmdVel",
+                "toAgent": "5ff7345f-834a-4f72-9094-6733402d06b7",
+                "toOutput": "value"
             }
         ],
         "splits": [
@@ -560,6 +604,82 @@
         "splitters": [
         ],
         "tools": [
+            {
+                "data": {
+                },
+                "definition": {
+                    "description": "",
+                    "family": "7fc274c8-b06e-429b-9d09-d14878381016",
+                    "inputs": [
+                        {
+                            "description": "",
+                            "name": "wildcard",
+                            "type": "WILDCARD_SINGLE_MAPPING"
+                        }
+                    ],
+                    "isDynamic": false,
+                    "name": "",
+                    "outputs": [
+                    ],
+                    "parameters": [
+                    ],
+                    "services": [
+                    ],
+                    "version": ""
+                },
+                "identity": "c6c9070b-0d9e-4724-9bf0-122c96c82c7d",
+                "instances": [
+                ],
+                "view": {
+                    "height": 46,
+                    "isCollapsed": false,
+                    "positionX": 438,
+                    "positionY": 697,
+                    "positionZ": 1.4100000000000004,
+                    "width": 180
+                }
+            },
+            {
+                "data": {
+                    "entry 0": "0:0"
+                },
+                "definition": {
+                    "description": "",
+                    "family": "fbba66d6-8d60-4694-b5fa-63b6f3f51e63",
+                    "inputs": [
+                        {
+                            "description": "",
+                            "name": "trigger",
+                            "type": "IMPULSION"
+                        }
+                    ],
+                    "isDynamic": false,
+                    "name": "",
+                    "outputs": [
+                        {
+                            "description": "",
+                            "name": "value",
+                            "type": "STRING"
+                        }
+                    ],
+                    "parameters": [
+                    ],
+                    "services": [
+                    ],
+                    "version": ""
+                },
+                "identity": "5ff7345f-834a-4f72-9094-6733402d06b7",
+                "instances": [
+                ],
+                "view": {
+                    "height": 52,
+                    "isCollapsed": false,
+                    "positionX": 58,
+                    "positionY": 515,
+                    "positionZ": 1.4300000000000004,
+                    "width": 256
+                }
+            }
         ]
     },
     "snippets": [
