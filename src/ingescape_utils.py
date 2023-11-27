@@ -11,3 +11,16 @@ def wait_for_agent(agent_name, on_agent_entered, on_agent_exited):
                 on_agent_exited()
 
     igs.observe_agent_events(on_agent_event, None)
+
+
+def parse_network_args():
+    import sys
+
+    if len(sys.argv) < 2:
+        print(f"Usage: {sys.argv[0]} <device> <port=5670>")
+        exit(1)
+
+    device = sys.argv[1]
+    port = int(sys.argv[2]) if len(sys.argv) >= 3 else 5670
+
+    return device, port

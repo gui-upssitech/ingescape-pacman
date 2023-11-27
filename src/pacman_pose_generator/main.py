@@ -1,6 +1,6 @@
 import ingescape as igs
 import sys, uuid, keyboard, time
-from src.ingescape_utils import wait_for_agent
+from src.ingescape_utils import wait_for_agent, parse_network_args
 
 # variables and state
 WHITEBOARD = "Whiteboard"
@@ -113,7 +113,8 @@ def auto_control():
 
 
 # program launch
-igs.start_with_device("WLAN 2", 5670)
+device, port = parse_network_args()
+igs.start_with_device(device, port)
 
 input()
 igs.stop()

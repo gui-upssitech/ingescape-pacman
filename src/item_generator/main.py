@@ -1,6 +1,6 @@
 import ingescape as igs
 import sys, uuid, time, random
-from src.ingescape_utils import wait_for_agent
+from src.ingescape_utils import wait_for_agent, parse_network_args
 # variables and state
 WHITEBOARD = "Whiteboard"
 
@@ -48,7 +48,8 @@ def generate():
 
 
 # program launch
-igs.start_with_device("wlo1", 5670)
+device, port = parse_network_args()
+igs.start_with_device(device, port)
 input()
 agent_state["running"] = False
 igs.stop()
