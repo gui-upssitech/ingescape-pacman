@@ -8,7 +8,8 @@ shapes = ["Rectangle", "Ellipse"]
 colors = ["Yellow", "Black", "Red", "Blue", "Green", "Purple", "Orange", "Pink", "Brown", "White"]
 
 agent_state = {
-    "whiteboard_exists": False
+    "whiteboard_exists": False,
+    "running": True
 }
 
 # igs agent definition
@@ -27,15 +28,18 @@ wait_for_agent(WHITEBOARD, on_whiteboard_available, on_whiteboard_unavailable)
 
 # main function
 def generate():
-    while (agent_state["whiteboard_exists"]):
+    while agent_state["running"]:
         form = random.choice(shapes)
-        x = random.randint(0, 1000)
-        y = random.randint(0, 1000)
-        width = random.randint(10, 50)
-        height = random.randint(10, 50)
+
+        x = float(random.randint(0, 600))
+        y = float(random.randint(0, 450))
+        width = float(random.randint(10, 50))
+        height = float(random.randint(10, 50))
+
         fill = random.choice(colors)
         stroke = random.choice(colors)
-        strokeWidth = random.randint(1, 10)
+        strokeWidth = float(random.randint(1, 8))
+
         params = (form, x, y, width, height, fill, stroke, strokeWidth)
         print(f"generating : {params}")
         igs.service_call(WHITEBOARD, "addShape", params, None)
@@ -44,6 +48,7 @@ def generate():
 
 
 # program launch
-igs.start_with_device("Ethernet", 5670)
+igs.start_with_device("wlo1", 5670)
 input()
+agent_state["running"] = False
 igs.stop()
